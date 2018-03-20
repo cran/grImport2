@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="432px" height="432px" viewBox="0 0 432 432" version="1.1">
+  <g transform="translate(0, 432) scale(1, -1)">
+    <g id="gridSVG" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="none" stroke-width="0.75" font-size="12" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" opacity="1" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-opacity="1" fill-opacity="0" font-weight="normal" font-style="normal">
+      <g id="picture.shape.1">
+        <defs>
+          <clipPath id="picture.shape::picture.scale.1.clipPath">
+            <rect x="0" y="0" width="432" height="432" fill="none" stroke="none"/>
+          </clipPath>
+        </defs>
+        <g id="picture.shape::picture.scale.1" clip-path="url(#picture.shape::picture.scale.1.clipPath)">
+          <g id="import.1.GRID.gTree.5.1">
+            <g id="GRID.gTree.4.1">
+              <g id="GRID.picComplexPath.1.1" fill="rgb(255,255,255)" stroke-width="0.64" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" stroke-miterlimit="10" stroke-opacity="1" fill-opacity="1">
+                <g id="GRID.picPath.2.1">
+                  <path id="GRID.picPath.2.1.1" d="M 108 108 L 324 108 L 324 324 L 108 324 Z" fill-rule="nonzero" stroke="rgb(255,255,255)" stroke-opacity="0"/>
+                </g>
+                <g id="GRID.picPolyline.3.1">
+                  <polyline id="GRID.picPolyline.3.1.1" points="108,108 324,108 324,324 108,324 108,108" fill="none" fill-opacity="0"/>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
