@@ -131,7 +131,7 @@ gridSVGAddFeatures <- function(grob, gp, defs,
 # Viewport from picture
 pictureVP <- function(picture, expansion = 0.05,
                       xscale = NULL, yscale = NULL,
-                      distort = FALSE, ...) {
+                      distort = FALSE, clip = "on", ...) {
     if (is.null(xscale) || is.null(yscale)) {
         xscale <- picture@summary@xscale
     	yscale <- picture@summary@yscale
@@ -154,7 +154,7 @@ pictureVP <- function(picture, expansion = 0.05,
                      layout.pos.col = 1,
                      xscale = xscale,
                      yscale = yscale,
-                     clip = "on"))
+                     clip = clip))
 }
 
 clipVP <- function(xscale, yscale) {

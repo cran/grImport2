@@ -2,6 +2,14 @@
 \title{NEWS file for the grImport2 package}
 \encoding{UTF-8}
 
+\section{Changes in version 0.1-5}{
+  \itemize{
+    \item Added \code{clip} argument to \code{grid.picture()} so that
+    we can inherit clipping region when drawing an imported image
+    (default remains that the picture sets its own clipping viewport).
+    Thanks to Silas Dean.
+  }
+}
 \section{Changes in version 0.1-4}{
   \itemize{
     \item Fix for importing radial gradient with gradientTransform

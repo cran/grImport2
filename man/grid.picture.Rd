@@ -17,7 +17,7 @@ pictureGrob(picture,
             xscale = NULL, yscale = NULL, distort = FALSE,
             gpFUN = identity, ...,
             ext = c("none", "clipbbox", "gridSVG"),
-            name = NULL, prefix = NULL)
+            name = NULL, prefix = NULL, clip = "on")
 grid.picture(...)
 }
 \arguments{
@@ -105,6 +105,10 @@ grid.picture(...)
     calling gridSVG's \code{listSVGDefinitions()}. When this parameter
     is \code{NULL}, a prefix will automatically be generated but this is
     not guaranteed to be unique.
+  }
+  \item{clip}{
+    Clipping setting passed to the viewport that is set up for drawing
+    the imported image.  
   }
 }
 \value{

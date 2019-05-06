@@ -31,12 +31,19 @@ model <- readLines("test-path-complex-output.svg.save")[-1]
 test <- readLines("test-path-complex-output.svg")[-1]
 same <- model == test
 if (! all(same)) {
-    stop(paste0("path-complex output not equal to expected output",
-                "------------------",
-                model[!same],
-                "------------------",
-                test[!same],
-                collapse="\n"))
+    ## Protect against tiny rounding differences in locations
+    x <- suppressWarnings(lapply(strsplit(model[!same], " "), as.numeric))
+    y <- suppressWarnings(lapply(strsplit(test[!same], " "), as.numeric))
+    rx <- unlist(lapply(x, round, 1))
+    ry <- unlist(lapply(y, round, 1))
+    if (!all.equal(rx, ry)) {
+        stop(paste0("path-complex output not equal to expected output",
+                    "------------------",
+                    model[!same],
+                    "------------------",
+                    test[!same],
+                    collapse="\n"))
+    }
 }
 
 

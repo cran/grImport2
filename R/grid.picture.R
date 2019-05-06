@@ -7,7 +7,7 @@ pictureGrob <- function(picture,
                         distort = FALSE,
                         gpFUN = identity, ...,
                         ext = c("none", "clipbbox", "gridSVG"),
-                        name = NULL, prefix = NULL) {
+                        name = NULL, prefix = NULL, clip = "on") {
     if (is.null(prefix))
         prefix <- generateNewPrefix()
     setPrefix(prefix)
@@ -18,7 +18,7 @@ pictureGrob <- function(picture,
             expansion = expansion,
             xscale = xscale, yscale = yscale,
             distort = distort, gpFUN = gpFUN, ext = match.arg(ext),
-            ..., name = name)
+            clip = clip, ..., name = name)
 }
 
 grid.picture <- function(...) {

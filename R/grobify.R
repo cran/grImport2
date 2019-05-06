@@ -319,11 +319,11 @@ setMethod("grobify",
           function(object, gpFUN = identity,
                    ext = c("none", "clipbbox", "gridSVG"),
                    expansion = 0.05, xscale = NULL, yscale = NULL,
-                   distort = FALSE, name = NULL, ...) {
+                   distort = FALSE, clip = "on", name = NULL, ...) {
               ext <- match.arg(ext)
               pvp <- pictureVP(object, expansion = expansion,
                                xscale = xscale, yscale = yscale,
-                               distort = distort, ...)
+                               distort = distort, clip = clip, ...)
               if (ext == "gridSVG") {
                   if (! requireNamespace("gridSVG")) {
                       warning("the 'gridSVG' package is required for advanced graphical features, reverting to 'clipbbox'")
