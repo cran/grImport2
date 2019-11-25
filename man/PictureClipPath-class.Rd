@@ -2,6 +2,7 @@
 \docType{class}
 \alias{PictureClipPath-class}
 \alias{grobify,PictureClipPath-method}
+\alias{applyTransform,PictureClipPath,matrix-method}
 
 \title{Class \code{"PictureClipPath"}}
 \description{
@@ -30,6 +31,12 @@
 }
 \section{Methods}{
   \describe{
+    \item{applyTransform}{
+      \code{signature(object = "PictureClipPath", tm = "matrix")}:
+      transforms the locations described by contents of the clip path object
+      by a 3x3 transformation matrix and returns a \code{"PictureClipPath"}
+      object whose children have had locations transformed by the matrix.
+    }
     \item{grobify}{\code{signature(object = "PictureClipPath")}:
       convert the clipping path into a grid grob. Useful only in
       conjunction with the gridSVG package for non-rectangular paths.

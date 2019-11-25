@@ -91,14 +91,14 @@ setMethod("grobify",
               if (!length(object@angle))
                   object@angle <- 0
               if (object@angle != 0) {
-                  r <- rasterGrob(object@image, 
+                  r <- rasterGrob(object@image,
                                   x=0, y=1, width=1, height=-1,
-                                  just = c("left", "bottom"),
+                                  just=c("left", "bottom"),
                                   vp = angleVP(object, image=TRUE))
               } else {
                   r <- rasterGrob(object@image,
                                   x = object@x,
-                                  y = unit(object@y + object@height, "native"),
+                                  y = object@y + object@height,
                                   width = object@width, height = -object@height,
                                   default.units = "native",
                                   just = c("left", "bottom"))
@@ -157,8 +157,9 @@ setMethod("grobify",
 angleVP <- function(object, image=FALSE) {
     # Get new x, y, width, height, and angle from
     # original x, y, width, height, and transform
-    if (image)
+    if (image) {
         object@angle <- -object@angle
+    }
     viewport(x = object@x, y = object@y,
              width = object@width, height = object@height,
              just = c("left", "bottom"),
@@ -189,7 +190,7 @@ setMethod("grobify",
                                       gp = object@gp)
               }
               if (ext == "gridSVG")
-                  grob <- gridSVGAddFeatures(grob, object@gp, defs)
+                  grob <- gridSVGAddFeatures(grob, object@gp)
               grob
           })
 
@@ -278,7 +279,7 @@ setMethod("grobify",
                                          lidlen, pidlen,
                                          object@rule, object@gp)
               if (ext == "gridSVG")
-                  grob <- gridSVGAddFeatures(grob, object@gp, defs)
+                  grob <- gridSVGAddFeatures(grob, object@gp)
               grob
           })
 
@@ -309,7 +310,7 @@ setMethod("grobify",
               }
               if (ext == "gridSVG")
                   groupGrob <-
-                      gridSVGAddFeatures(groupGrob, object@gp, defs,
+                      gridSVGAddFeatures(groupGrob, object@gp, 
                                          object@maskRef, object@filterRef)
               groupGrob
           })
@@ -334,7 +335,7 @@ setMethod("grobify",
                       # this we also set the gradient and pattern labels to be
                       # the same as the SVG IDs.
                       pushViewport(pvp, recording = FALSE)
-                      registerDefs(object@defs)
+                      registerDefs(object@defs, ext)
                       # Up 2 because we pushed a vpStack of 2 viewports
                       upViewport(2, recording = FALSE)
                   }

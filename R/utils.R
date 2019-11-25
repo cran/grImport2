@@ -21,7 +21,7 @@ readBase64Image <- function(x) {
         readJPEG(base64decode(base64Data), native = TRUE)
 }
 
-svgStyleToList <- function(styleAttr, defs) {
+svgStyleToList <- function(styleAttr) {
     if (is.null(styleAttr))
         return(list())
     attrs <- strsplit(styleAttr, ";")[[1]]
@@ -69,7 +69,7 @@ svgStyleToList <- function(styleAttr, defs) {
     # fills/strokes to patternFill="" or gradientStroke="", etc
     if ("col" %in% names(gpars) && is.urlref(gpars$col)) {
         id <- urlToID(gpars$col)
-        colType <- class(getDef(defs, id))
+        colType <- class(getDef(id))
         if (colType == "PicturePattern")
             gpars$patternStroke <- id
         else
@@ -78,7 +78,7 @@ svgStyleToList <- function(styleAttr, defs) {
     }
     if ("fill" %in% names(gpars) && is.urlref(gpars$fill)) {
         id <- urlToID(gpars$fill)
-        fillType <- class(getDef(defs, id))
+        fillType <- class(getDef(id))
         if (fillType == "PicturePattern")
             gpars$patternFill <- id
         else

@@ -5,8 +5,8 @@
 \alias{getDef-methods}
 \alias{setDef}
 \alias{setDef-methods}
-\alias{getDef,PictureDefinitions,character-method}
-\alias{setDef,PictureDefinitions,character,PictureContent-method}
+\alias{getDef,character-method}
+\alias{setDef,character,PictureContent-method}
 
 \title{Class \code{"PictureDefinitions"}}
 \description{
@@ -27,13 +27,13 @@
 \section{Methods}{
   \describe{
     \item{getDef}{
-      \code{signature(object = "PictureDefinitions", id =
-        "character")}: retrieves an object that is referred to by a
+      \code{signature(id = "character")}:
+      retrieves an object that is referred to by a
       given label.
     }
     \item{setDef}{
-      \code{signature(object = "PictureDefinitions", id = "character",
-      value = "PictureContent")}: Not intended to be used by regular
+      \code{signature(id = "character", value = "PictureContent")}:
+      Not intended to be used by regular
       users, but this is a method for assigning a definition to be
       referenced later by \code{"PictureContent"} objects. This method
       stores a new definition (\code{value}) with a given label

@@ -51,6 +51,7 @@ export(pictureGrob)
 export(grid.symbols)
 export(symbolsGrob)
 
+S3method("makeContent", "PictureGrob")
 S3method("makeContext", "picRect")
 S3method("makeContent", "picRect")
 S3method("makeContent", "picPolyline")

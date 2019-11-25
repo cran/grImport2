@@ -2,6 +2,46 @@
 \title{NEWS file for the grImport2 package}
 \encoding{UTF-8}
 
+\section{Changes in version 0.2-0}{
+  \itemize{
+    \item \code{pictureGrob()} has a new argument \code{delayContent}.
+    If that is \code{TRUE}, the function returns a \code{"PictureGrob"}
+    gTree that has a \code{makeContent()} method, so that
+    \code{grobify()} only happens at drawing time, so that,
+    IF we are using \pkg{gridSVG} for output,
+    registration of SVG definitions happens within the current
+    viewport.  The default value is \code{ext == "gridSVG"}.
+
+    \item Internal restructuring:  to fix more complex SVG input
+    where \code{<defs>} refer to each other and include nested
+    transformations; to handle transformations more consistently
+    in general;  to fix calculation of bounding box for transformed
+    clipping path.
+
+    \item \code{readPicture()} has a new argument \code{initDefs},
+    which controls whether the list of definitions (things like
+    masks, filters, gradient fills, ...) is initialized when
+    reading a new picture.  This should be set to \code{FALSE}
+    when importing and drawing more than one picture in the same
+    R image.
+  }
+}
+\section{Changes in version 0.1-6}{
+  \itemize{
+    \item fix for importing SVG containing \code{<use>} elements that
+    refer to complex content (including nested \code{<use>} elements,
+    \code{<use>} use elements with \code{transform} attributes,
+    \code{<use>} elements with \code{mask} attributes, and \code{use}
+    content with \code{clip-path} attributes.
+    
+    \item fix for feColorMatrix filter (matrix value was being
+    transposed).
+    
+    \item fix for \code{ext="gridSVG"} when exporting definitions
+    (like masks) that contain references to other definitions
+    (like filters).
+  }
+}
 \section{Changes in version 0.1-5}{
   \itemize{
     \item Added \code{clip} argument to \code{grid.picture()} so that

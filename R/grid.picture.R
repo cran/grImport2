@@ -7,18 +7,55 @@ pictureGrob <- function(picture,
                         distort = FALSE,
                         gpFUN = identity, ...,
                         ext = c("none", "clipbbox", "gridSVG"),
+                        delayContent = match.arg(ext) == "gridSVG",
                         name = NULL, prefix = NULL, clip = "on") {
-    if (is.null(prefix))
+    if (delayContent) {
+        if (!is.unit(x))
+            x <- unit(x, default.units)
+        if (!is.unit(y))
+            y <- unit(y, default.units)
+        if (!is.unit(width))
+            width <- unit(width, default.units)
+        if (!is.unit(height))
+            height <- unit(height, default.units)
+        gTree(picture=picture, 
+              x = x, y = y, width = width, height = height, just = just,
+              expansion = expansion, xscale = xscale, yscale = yscale,
+              distort = distort, gpFUN = gpFUN, ext = match.arg(ext),
+              clip = clip, prefix = prefix,
+              grobifyArgs <- list(...),
+              name = name, cl="PictureGrob")
+    } else {
+        if (is.null(prefix))
+            prefix <- generateNewPrefix()
+        setPrefix(prefix)
+        grobify(picture, 
+                x = x, y = y,
+                width = width, height = height,
+                default.units = default.units, just = just,
+                expansion = expansion,
+                xscale = xscale, yscale = yscale,
+                distort = distort, gpFUN = gpFUN, ext = match.arg(ext),
+                clip = clip, ..., name = name)
+    }
+}
+
+makeContent.PictureGrob <- function(x, ...) {
+    if (is.null(x$prefix))
         prefix <- generateNewPrefix()
+    else
+        prefix <- x$prefix
     setPrefix(prefix)
-    grobify(picture, 
-            x = x, y = y,
-            width = width, height = height,
-            default.units = default.units, just = just,
-            expansion = expansion,
-            xscale = xscale, yscale = yscale,
-            distort = distort, gpFUN = gpFUN, ext = match.arg(ext),
-            clip = clip, ..., name = name)
+    picGrob <- do.call(grobify,
+                       c(list(x$picture, 
+                              x = x$x, y = x$y,
+                              width = x$width, height = x$height, just = x$just,
+                              expansion = x$expansion,
+                              xscale = x$xscale, yscale = x$yscale,
+                              distort = x$distort, gpFUN = x$gpFUN, ext = x$ext,
+                              clip = x$clip),
+                         x$grobifyArgs))
+    setChildren(x, gList(picGrob))
 }
 
 grid.picture <- function(...) {

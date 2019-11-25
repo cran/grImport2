@@ -2,6 +2,7 @@
 \docType{class}
 \alias{PictureMask-class}
 \alias{grobify,PictureMask-method}
+\alias{applyTransform,PictureMask,matrix-method}
 
 \title{Class \code{"PictureMask"}}
 \description{
@@ -21,6 +22,12 @@
 }
 \section{Methods}{
   \describe{
+    \item{applyTransform}{
+      \code{signature(object = "PictureMask", tm = "matrix")}:
+      transforms the locations described by contents of the mask object
+      by a 3x3 transformation matrix and returns a \code{"PictureMask"}
+      object whose children have had locations transformed by the matrix.
+    }
     \item{grobify}{
       \code{signature(object = "PictureMask")}: creates a mask object
       for use with the gridSVG package. Not intended to be used

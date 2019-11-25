@@ -17,6 +17,7 @@ pictureGrob(picture,
             xscale = NULL, yscale = NULL, distort = FALSE,
             gpFUN = identity, ...,
             ext = c("none", "clipbbox", "gridSVG"),
+            delayContent = match.arg(ext) == "gridSVG",
             name = NULL, prefix = NULL, clip = "on")
 grid.picture(...)
 }
@@ -93,6 +94,15 @@ grid.picture(...)
     used when drawing the \code{"Picture"} object, which enables the use
     of complex clipping paths, gradients, patterns, etc. to be rendered
     from an imported picture.
+  }
+  \item{delayContent}{
+    If \code{FALSE}, \code{pictureGrob()} generates a gTree with
+    children immediately.
+    If \code{TRUE}, \code{pictureGrob()} produces a gTree with a
+    \code{makeContent()} method so that children are generated only
+    at drawing time.  The latter is relevant when \code{ext ==
+      "gridSVG"} because it affects when SVG definitions are
+    registered.
   }
   \item{name}{
     A character identifier.

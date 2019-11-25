@@ -88,12 +88,12 @@ scaleLwd <- function(gp) {
 
 # Apply gridSVG features to grid grobs
 # FIXME: Make this more efficient by using registration
-gridSVGAddFeatures <- function(grob, gp, defs,
+gridSVGAddFeatures <- function(grob, gp, 
                                mask = character(0),
                                filter = character(0)) {
     gparNames <- names(gp)
     if ("gradientFill" %in% gparNames) {
-        gradDef <- getDef(defs, gp$gradientFill)
+        gradDef <- getDef(gp$gradientFill)
         if (! is.null(gradDef)) {
             # Assume a fillAlpha of 1 because there will be no
             # fill property (due to gradient being there instead)
@@ -108,7 +108,7 @@ gridSVGAddFeatures <- function(grob, gp, defs,
         #def <- getDef(defs, gp$gradientStroke)
     }
     if ("patternFill" %in% gparNames) {
-        patDef <- getDef(defs, gp$patternFill)
+        patDef <- getDef(gp$patternFill)
         if (! is.null(patDef)) {
             fillAlpha <- 1
             grob <- gridSVG::patternFillGrob(grob,
@@ -166,22 +166,23 @@ clipVP <- function(xscale, yscale) {
              clip = "on")
 }
 
-registerDefs <- function(defs) {
+registerDefs <- function(defs, ext) {
     content <- defs@content
     ids <- names(content)
     for (i in seq_len(length(content))) {
         def <- content[[i]]
         label <- prefixName(ids[i])
         if (class(def) == "PicturePattern")
-            gridSVG::registerPatternFill(label, grobify(def))
+            gridSVG::registerPatternFill(label, grobify(def, ext=ext))
         if (class(def) == "PictureFilter")
-            gridSVG::registerFilter(label, grobify(def))
+            gridSVG::registerFilter(label, grobify(def, ext=ext))
         if (class(def) == "PictureMask")
-            gridSVG::registerMask(label, grobify(def))
+            gridSVG::registerMask(label, grobify(def, ext=ext))
         if (class(def) == "PictureClipPath")
-            gridSVG::registerClipPath(label, gridSVG::clipPath(grobify(def)))
+            gridSVG::registerClipPath(label,
+                                      gridSVG::clipPath(grobify(def, ext=ext)))
         if (any(class(def) == c("PictureLinearGradient",
                                 "PictureRadialGradient")))
-            gridSVG::registerGradientFill(label, grobify(def))
+            gridSVG::registerGradientFill(label, grobify(def, ext=ext))
     }
 }
