@@ -21,16 +21,10 @@ readBase64Image <- function(x) {
         readJPEG(base64decode(base64Data), native = TRUE)
 }
 
-svgStyleToList <- function(styleAttr) {
-    if (is.null(styleAttr))
-        return(list())
-    attrs <- strsplit(styleAttr, ";")[[1]]
-    attrs <- attrs[nzchar(attrs)]
-    attrs <- unlist(strsplit(attrs, " "))
-    splitAttrs <- strsplit(attrs[nzchar(attrs)], ":")
-    gparNames <- sapply(splitAttrs,
+attrList <- function(attrs) {
+    gparNames <- sapply(names(attrs),
         function(x) {
-            switch(x[1],
+            switch(x,
                    fill = "fill",
                    "font-family" = "fontfamily",
                    "fill-opacity" = "fillAlpha",
@@ -47,16 +41,16 @@ svgStyleToList <- function(styleAttr) {
                    "stroke-width" = "lwd",
                    x[1])
         })
-    gpars <- lapply(splitAttrs, function(x) {
+    gpars <- lapply(attrs, function(x) {
         # Attempt to cast to numeric, if NA, must be char
-        num <- suppressWarnings(as.numeric(x[2]))
+        num <- suppressWarnings(as.numeric(x))
         if (! is.na(num)) {
             num
         } else {
             # Switch a few SVG values to grid parlance
-            switch(x[2],
+            switch(x,
                    nonzero = "winding",
-                   x[2])
+                   x)
         }
     })
 
@@ -89,11 +83,91 @@ svgStyleToList <- function(styleAttr) {
     gpars
 }
 
+svgStyleToList <- function(styleAttr) {
+    if (is.null(styleAttr))
+        return(list())
+    attrs <- strsplit(styleAttr, ";")[[1]]
+    attrs <- attrs[nzchar(attrs)]
+    attrs <- unlist(strsplit(attrs, " "))
+    splitAttrs <- strsplit(attrs[nzchar(attrs)], ":")
+    attrMat <- matrix(unlist(splitAttrs), ncol=2, byrow=TRUE)
+    attrs <- attrMat[,2]
+    names(attrs) <- attrMat[,1]
+    attrs
+}
+
+## Generate a list of SVG styling based on SVG presentation attributes
+## and CSS styling in SVG 'style' attributes.
+## NOTE that the latter takes precedence
+## https://stackoverflow.com/questions/6525405/svg-use-attributes-or-css-to-style
+presentationAttributes <- c("fill",
+                            "fill-rule",
+                            "fill-opacity",
+                            "font-family",
+                            "font-style",
+                            "font-size",
+                            "font-weight",
+                            "opacity",
+                            "stop-color",
+                            "stop-opacity",
+                            "stroke",
+                            "stroke-dasharray",
+                            "stroke-linecap",
+                            "stroke-linejoin",
+                            "stroke-miterlimit",
+                            "stroke-opacity",
+                            "stroke-width")
+
+svgStyleList <- function(x) {
+    attrs <- as.list(xmlAttrs(x))
+    if (!length(attrs))
+        return(NULL)
+    attrNames <- names(attrs)
+    presentation <- NULL
+    presentationAttrs <-
+        sapply(names(attrs), function(y) y %in% presentationAttributes)
+    if (any(presentationAttrs)) {
+        presentation <- attrs[presentationAttrs]
+    }
+    style <- NULL
+    if ("style" %in% attrNames) {
+        style <- svgStyleToList(attrs$style)
+    }
+    if (is.null(presentation)) {
+        if (is.null(style)) {
+            return(NULL)
+        } else {
+            attrList(style)
+        }
+    } else {
+        if (is.null(style)) {
+            attrList(presentation)
+        } else {
+            ## 'style' overrides presentation attributes
+            overlap <- intersect(names(style), names(presentation))
+            if (any(overlap)) {
+                styleOnly <- setdiff(names(style), names(presentation))
+                presentationOnly <- setdiff(names(presentation), names(style))
+                attrList(c(style[styleOnly], style[overlap],
+                           presentation[presentationOnly]))
+            } else {
+                attrList(c(style, presentation))
+            }
+        }
+    }
+}
+
 parseLty <- function(x) {
     if (x == "none")
         1 # solid
-    else
-        as.numeric(strsplit(x, ",")[[1]])
+    else {
+        ## See "Usage notes"
+        ## https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray
+        lty <- as.numeric(strsplit(as.character(x), ",| ")[[1]])
+        if (length(lty) %% 2 == 1)
+            lty <- rep(lty, 2)
+        lty
+    }
 }
 
 # Pull out all of the gpar settings
@@ -227,7 +301,12 @@ stopsToCol <- function(stopStyle) {
 parseTransform <- function(x) {
     if (is.null(x))
         return(x)
-    # Remove "matrix(" and ")"
+    ## Warn if not a "Cairo" transform
+    if (!grepl("^matrix(.+)$", x)) {
+        warning("Non-Cairo transform ignored")
+        return(NULL)
+    }
+    ## Remove "matrix(" and ")"
     pieces <- strsplit(substring(x, nchar("matrix(") + 1, nchar(x) - 1),
                        ",")[[1]]
     rbind(matrix(as.numeric(pieces), ncol = 3),

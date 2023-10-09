@@ -33,7 +33,7 @@ getPictureDims <- function(image) {
     svgDims <- c(xmlGetAttr(image, "width"),
                  xmlGetAttr(image, "height"))
     # Remove "pt"
-    as.numeric(substring(svgDims, 1, nchar(svgDims) - 2))
+    as.numeric(gsub("[^0-9]*", "", svgDims))
 }
 
 nullFn <- function(...) { NULL }
@@ -88,7 +88,7 @@ parseSVGFilter <- function(x, createDefs) {
 
 parseSVGGroup <- function(x, createDefs) {
     # Getting style information to pass on later
-    styleList <- svgStyleToList(xmlGetAttr(x, "style"))
+    styleList <- svgStyleList(x)
     if (length(styleList)) {
         tm <- parseTransform(xmlGetAttr(x, "transform"))
         gp <- svgStyleListToGpar(styleList)
@@ -202,7 +202,7 @@ parseSVGPattern <- function(x, createDefs) {
 }
 
 parseSVGPath <- function(x, createDefs) {
-    styleList <- svgStyleToList(xmlGetAttr(x, "style"))
+    styleList <- svgStyleList(x)
     tm <- parseTransform(xmlGetAttr(x, "transform"))
     # Sometimes a path is present where d=""
     d <- xmlGetAttr(x, "d")
@@ -255,7 +255,7 @@ parseSVGRadialGradient <- function(x, createDefs) {
 
 parseSVGRect <- function(x, createDefs) {
     rectAttrs <- as.list(xmlAttrs(x))
-    styleList <- svgStyleToList(rectAttrs$style)
+    styleList <- svgStyleList(x)
     tm <- parseTransform(rectAttrs$transform)
     gp <- svgStyleListToGpar(styleList)
     # If 'x' or 'y' are unspecified,
@@ -280,7 +280,7 @@ parseSVGStop <- function(x, createDefs) {
     # ignore defs and createalways content for another definition
     stopAttrs <- as.list(xmlAttrs(x))
     offset <- as.numeric(stopAttrs$offset)
-    styleList <- svgStyleToList(stopAttrs$style)
+    styleList <- svgStyleList(x)
     col <- stopsToCol(styleList)
     new("PictureGradientStop", offset = offset, col = col)
 }

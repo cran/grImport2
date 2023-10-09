@@ -545,6 +545,29 @@ setMethod("applyTransform",
               object 
           })
 
+setMethod("applyTransform",
+          signature(object = "Picture",
+                    tm = "matrix"),
+          function(object, tm) {
+              content <- lapply(object@content, applyTransform, tm)
+              defs <- new("PictureDefinitions",
+                          content = lapply(object@defs@content,
+                                           applyTransform, tm))
+              allBounds <- lapply(content, getbbox)
+              xmin <- min(sapply(allBounds, function(x) x[1]))
+              xmax <- max(sapply(allBounds, function(x) x[2]))
+              ymin <- min(sapply(allBounds, function(x) x[3]))
+              ymax <- max(sapply(allBounds, function(x) x[4]))
+              bbox <- c(xmin, xmax, ymin, ymax)
+              summary <- new("PictureSummary",
+                             xscale = bbox[1:2],
+                             yscale = rev(bbox[3:4]))
+              new("Picture",
+                  content = content,
+                  defs = defs,
+                  summary = summary)
+          })
+
 getbboxFromList <- function(x) {
     allBounds <- lapply(x, getbbox)
     xmin <- min(sapply(allBounds, function(x) x[1]))

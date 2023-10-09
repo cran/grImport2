@@ -2,6 +2,27 @@
 \title{NEWS file for the grImport2 package}
 \encoding{UTF-8}
 
+\section{Changes in version 0.3-0}{
+  \itemize{
+    \item Expand SVG parser to support newer Cairo SVG output
+    (Cairo >= 1.18.0).
+
+    Root \code{<svg>} element has no units on \code{width} and
+    \code{height}.
+
+    Many other elements use SVG presentation attributes rather
+    than a single \code{style} attribute (with CSS attributes).
+  }
+}
+\section{Changes in version 0.2-1}{
+  \itemize{
+    \item Restore current graphics device after \code{readPicture()}
+    call.  Thanks to Trevor Davis for report and patch.
+    
+    \item Add \code{Picture} method for \code{applyTransform()}.
+    Thanks to Trevor Davis for report.
+  }
+}
 \section{Changes in version 0.2-0}{
   \itemize{
     \item \code{pictureGrob()} has a new argument \code{delayContent}.

@@ -3,6 +3,7 @@
 \alias{Picture-class}
 \alias{[,Picture-method}
 \alias{[[,Picture-method}
+\alias{applyTransform,Picture,matrix-method}
 \alias{grobify,Picture-method}
 
 \title{Class "Picture"}
@@ -43,6 +44,12 @@
       \code{signature(x = "Picture")}: extract a single piece of a
       picture object, to produce a new picture (including a new, updated
       summary).
+    }
+    \item{applyTransform}{
+      \code{signature(object = "Picture", tm = "matrix")}:
+      transforms each element of the picture by a 3x3
+      transformation matrix and returns a new \code{"Picture"}
+      object with the newly transformed locations.
     }
     \item{grobify}{
       \code{signature(object = "Picture")}: convert a picture

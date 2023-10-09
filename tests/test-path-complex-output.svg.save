@@ -8,7 +8,7 @@
             <rect x="0" y="64.8" width="432" height="302.4" fill="none" stroke="none"/>
           </clipPath>
         </defs>
-        <g id="picture.shape::picture.scale.1" clip-path="url(#picture.shape::picture.scale.1.clipPath)">
+        <g id="picture.shape::picture.scale.1" clip-path="url(#picture.shape::picture.scale.1.clipPath)" stroke="none" fill="rgb(0,0,0)" stroke-opacity="0" fill-opacity="1">
           <g id="import.2.GRID.gTree.1420.1">
             <g id="GRID.gTree.1419.1">
               <g id="GRID.picRect.911.1">

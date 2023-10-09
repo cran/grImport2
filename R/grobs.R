@@ -154,7 +154,10 @@ pictureVP <- function(picture, expansion = 0.05,
                      layout.pos.col = 1,
                      xscale = xscale,
                      yscale = yscale,
-                     clip = clip))
+                     clip = clip,
+                     ## Enforce SVG defaults
+                     ## https://oreillymedia.github.io/Using_SVG/guide/style.html
+                     gp = gpar(col=NA, fill="black")))
 }
 
 clipVP <- function(xscale, yscale) {
@@ -172,17 +175,17 @@ registerDefs <- function(defs, ext) {
     for (i in seq_len(length(content))) {
         def <- content[[i]]
         label <- prefixName(ids[i])
-        if (class(def) == "PicturePattern")
+        if (is(def, "PicturePattern"))
             gridSVG::registerPatternFill(label, grobify(def, ext=ext))
-        if (class(def) == "PictureFilter")
+        if (is(def, "PictureFilter"))
             gridSVG::registerFilter(label, grobify(def, ext=ext))
-        if (class(def) == "PictureMask")
+        if (is(def, "PictureMask"))
             gridSVG::registerMask(label, grobify(def, ext=ext))
-        if (class(def) == "PictureClipPath")
+        if (is(def, "PictureClipPath"))
             gridSVG::registerClipPath(label,
                                       gridSVG::clipPath(grobify(def, ext=ext)))
-        if (any(class(def) == c("PictureLinearGradient",
-                                "PictureRadialGradient")))
+        if (is(def, "PictureLinearGradient") ||
+            is(def, "PictureRadialGradient"))
             gridSVG::registerGradientFill(label, grobify(def, ext=ext))
     }
 }
