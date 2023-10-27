@@ -47,18 +47,40 @@ setValidity("PictureClipPath",
                 all(sapply(object@content, is, "PictureContent"))
             })
 
+setClass("PictureFeImage",
+         representation("PictureContent",
+                        href = "character",
+                        result = "character",
+                        x = "numeric",
+                        y = "numeric",
+                        width = "numeric",
+                        height = "numeric"))
+
+setClass("PictureFeComposite",
+         representation("PictureContent",
+                        input1 = "character",
+                        input2 = "character",
+                        operator = "character",
+                        k1 = "numeric",
+                        k2 = "numeric",
+                        k3 = "numeric",
+                        k4 = "numeric",
+                        colorspace = "character"))
+         
 setClass("PictureFeColorMatrix",
          representation("PictureContent",
                         type = "character",
                         input = "character",
-                        values = "matrix"))
+                        values = "matrix",
+                        colorspace = "character"))
 
 setClass("PictureFilter",
          representation("PictureContent",
                         filterUnits = "character",
+                        primitiveUnits = "character",
                         x = "numeric", y = "numeric",
                         width = "numeric", height = "numeric",
-                        content = "PictureFeColorMatrix"))
+                        content = "list"))
 
 setClass("PictureGroup",
          representation("PictureContent",

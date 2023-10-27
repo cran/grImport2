@@ -55,31 +55,69 @@ parseSVGClipPath <- function(x, createDefs) {
         cp
 }
 
+parseSVGFeImage <- function(x, createDefs) {
+    attrs <- as.list(xmlAttrs(x))
+    new("PictureFeImage",
+        href = hrefToID(attrs$href),
+        result = attrs$result,
+        x = as.numeric(attrs$x),
+        y = as.numeric(attrs$y),
+        width = as.numeric(attrs$width),
+        height = as.numeric(attrs$height))
+}
+
+parseSVGFeComposite <- function(x, createDefs) {
+    attrs <- xmlAttrs(x)
+    new("PictureFeComposite",
+        input1 = attrs["in"],
+        input2 = attrs["in2"],
+        operator = attrs["operator"],
+        k1 = as.numeric(attrs["k1"]),
+        k2 = as.numeric(attrs["k2"]),
+        k3 = as.numeric(attrs["k3"]),
+        k4 = as.numeric(attrs["k4"]),
+        colorspace = attrs["color=interpolation-filters"])
+}
+
 parseSVGFeColorMatrix <- function(x, createDefs) {
-    # type will be a matrix
-    # input will be SourceGraphic
-    # primary concern is parsing values, which will likely be the following
-    # sequence of integers:
-    # "0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+    ## https://www.w3.org/TR/SVG11/filters.html#feColorMatrixElement
+    ## 'type' defaults to "matrix"
+    type <- xmlGetAttr(x, "type")
+    if (is.null(type))
+        type <- "matrix"
+    ## 'input' defaults to NA
+    input <- xmlGetAttr(x, "in")
+    if (is.null(input))
+        input <- as.character(NA)
+    ## 'color-interpolation-filters' defaults to "auto"
+    colorspace <- xmlGetAttr(x, "color-interpolation-filters")
+    if (is.null(colorspace))
+        colorspace <- "auto"
+    ## Primary concern is parsing values, which will likely be the following
+    ## sequence of integers:
+    ## "0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
     nums <- as.integer(strsplit(xmlGetAttr(x, "values"), " ")[[1]])
     colmat <- matrix(nums, nrow = 4, ncol = 5, byrow=TRUE)
     new("PictureFeColorMatrix",
-        type = xmlGetAttr(x, "type"),
-        input = xmlGetAttr(x, "in"),
-        values = colmat)
+        type = type,
+        input = input,
+        values = colmat,
+        colorspace = colorspace)
 }
 
 parseSVGFilter <- function(x, createDefs) {
-    # Can assume just one child (if necessary)
-    # because Cairo SVG does not include more than
-    # a single feColorMatrix element
     filterID <- xmlGetAttr(x, "id")
     # children don't set definitions, set createDefs to FALSE
-    fecolmat <- parseImage(xmlChildren(x, addNames = FALSE),
-                           createDefs = FALSE)[[1]]
-    f <- new("PictureFilter", filterUnits = "bbox",
-              x = 0, y = 0, width = 1, height = 1,
-              content = fecolmat)
+    effects <- parseImage(xmlChildren(x, addNames = FALSE),
+                          createDefs = FALSE)
+    f <- new("PictureFilter",
+             ## NOTE that we are ASSUMING x/y/w/h = 0/0/1/1
+             ## AND that filterUnits="objectBoundingBox"
+             ## AND that primitiveUnits="userSpaceOnUse"
+             ## (and ignoring anything to the contrary in the imported SVG)
+             filterUnits = "bbox", primitiveUnits = "coords",
+             x = 0, y = 0, width = 1, height = 1,
+             content = effects)
     if (createDefs)
         setDef(filterID, f) # should always be this
     else
@@ -366,6 +404,8 @@ parseImage <- function(x, createDefs = FALSE) {
         svgFn <- switch(el,
                         clipPath = parseSVGClipPath,
                         feColorMatrix = parseSVGFeColorMatrix,
+                        feImage = parseSVGFeImage,
+                        feComposite = parseSVGFeComposite,
                         filter = parseSVGFilter,
                         g = parseSVGGroup,
                         image = parseSVGImage,

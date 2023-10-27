@@ -175,17 +175,26 @@ registerDefs <- function(defs, ext) {
     for (i in seq_len(length(content))) {
         def <- content[[i]]
         label <- prefixName(ids[i])
-        if (is(def, "PicturePattern"))
+        if (is(def, "PicturePattern")) {
             gridSVG::registerPatternFill(label, grobify(def, ext=ext))
-        if (is(def, "PictureFilter"))
+        } else if (is(def, "PictureFilter")) {
             gridSVG::registerFilter(label, grobify(def, ext=ext))
-        if (is(def, "PictureMask"))
+        } else if (is(def, "PictureMask")) {
             gridSVG::registerMask(label, grobify(def, ext=ext))
-        if (is(def, "PictureClipPath"))
+        } else if (is(def, "PictureClipPath")) {
             gridSVG::registerClipPath(label,
                                       gridSVG::clipPath(grobify(def, ext=ext)))
-        if (is(def, "PictureLinearGradient") ||
-            is(def, "PictureRadialGradient"))
+        } else if (is(def, "PictureLinearGradient") ||
+                   is(def, "PictureRadialGradient")) {
             gridSVG::registerGradientFill(label, grobify(def, ext=ext))
+        } else {
+            warning("Some definitions not registered")
+            ## if (nchar(system.file(package="ggplot2")) &&
+            ##     packageVersion("gridSVG") > "1.7-5") {
+            ##     gridSVG::registerDef(label, grobify(def, ext=ext))
+            ## } else {
+            ##     warning("Some definitions not registered")
+            ## }
+        }
     }
 }

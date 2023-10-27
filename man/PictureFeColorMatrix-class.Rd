@@ -13,6 +13,7 @@
     \item{\code{type}:}{Object of class \code{"character"} ~~ }
     \item{\code{input}:}{Object of class \code{"character"} ~~ }
     \item{\code{values}:}{Object of class \code{"matrix"} ~~ }
+    \item{\code{colorspace}:}{Object of class \code{"character"} ~~ }
   }
 }
 \section{Extends}{

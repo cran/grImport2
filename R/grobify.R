@@ -12,6 +12,31 @@ setMethod("grobify",
           })
 
 setMethod("grobify",
+          signature(object = "PictureFeImage"),
+          function(object) {
+              gridSVG::feImage(href = prefixName(object@href),
+                               result = object@result,
+                               x = object@x,
+                               y = object@y,
+                               width = object@width,
+                               height = object@height,
+                               just = c("left", "bottom"),
+                               default.units = "native")
+          })
+
+setMethod("grobify",
+          signature(object = "PictureFeComposite"),
+          function(object) {
+              gridSVG::feComposite(input1 = object@input1,
+                                   input2 = object@input2,
+                                   operator = object@operator,
+                                   k1 = object@k1,
+                                   k2 = object@k2,
+                                   k3 = object@k3,
+                                   k4 = object@k4)
+          })
+
+setMethod("grobify",
           signature(object = "PictureFeColorMatrix"),
           function(object) {
               gridSVG::feColorMatrix(input = object@input,
@@ -23,11 +48,13 @@ setMethod("grobify",
           signature(object = "PictureFilter"),
           function(object, ...) {
               # defs are not needed, nor gpFUN, and gridSVG is implied
-              gridSVG::filterEffect(grobify(object@content),
-                           filterUnits = object@filterUnits,
-                           x = object@x, y = object@y,
-                           width = object@width, height = object@height,
-                           just = c("left", "bottom"))
+              gridSVG::filterEffect(lapply(object@content, grobify),
+                                    filterUnits = object@filterUnits,
+                                    primitiveUnits = object@primitiveUnits,
+                                    x = object@x, y = object@y,
+                                    width = object@width,
+                                    height = object@height,
+                                    just = c("left", "bottom"))
           })
 
 setMethod("grobify",

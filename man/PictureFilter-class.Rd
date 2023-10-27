@@ -15,6 +15,11 @@
       effect should be positioned against. This should always be
       \code{"bbox"}.
     }
+    \item{\code{primitiveUnits}:}{
+      Object of class \code{"character"}. The units that the filter
+      effect should be relative to. This should always be
+      \code{"coords"}.
+    }
     \item{\code{x}:}{
       Object of class \code{"numeric"}. A vector of length one
       representing the x-location of the bottom-left corner of the

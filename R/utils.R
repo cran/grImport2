@@ -299,18 +299,58 @@ stopsToCol <- function(stopStyle) {
 }
 
 parseTransform <- function(x) {
+
+    parseTrans <- function(y) {
+        y <- gsub(" ", "", y)
+        pieces <- strsplit(y, "[(]|,")[[1]]
+        f <- pieces[1]
+        args <- as.numeric(pieces[-1])
+        nargs <- length(args)
+        mat <- diag(3)
+        if (f == "matrix") {
+            mat[1:2, 1:3] <- args
+        } else if (f == "translate") {
+            mat[1:2, 3] <- args
+        } else if (f == "scale") {
+            mat[1, 1] <- args[1]
+            if (nargs < 2) {
+                mat[2, 2] <- args[1]
+            } else {
+                mat[2, 2] <- args[2]
+            }
+        } else if (f == "rotate") {
+            r <- pi*args[1]/180
+            mat[1, 1] <- cos(r)
+            mat[1, 2] <- -sin(r)
+            mat[2, 1] <- sin(r)
+            mat[2, 2] <- cos(r)
+            if (nargs > 1) {
+                tr1 <- diag(3)
+                tr2 <- diag(3)
+                tr1[1:2, 3] <- args[2:3]
+                tr2[1:2, 3] <- -args[2:3]
+                mat <- tr1 %*% mat %*% tr2
+            }
+        } else if (f == "skewX") {
+            mat[1, 2] <- args[1]
+        } else if (f == "skewY") {
+            mat[2, 1] <- args[1]
+        } else {
+            warning("SVG transform unsupported (ignored)")
+        }
+        mat
+    }
+
     if (is.null(x))
         return(x)
-    ## Warn if not a "Cairo" transform
-    if (!grepl("^matrix(.+)$", x)) {
-        warning("Non-Cairo transform ignored")
+    transforms <- strsplit(x, ")", fixed=TRUE)[[1]]
+    ntrans <- length(transforms)
+    if (ntrans < 1) {
+        warning("SVG transform not supported (ignored)")
         return(NULL)
     }
-    ## Remove "matrix(" and ")"
-    pieces <- strsplit(substring(x, nchar("matrix(") + 1, nchar(x) - 1),
-                       ",")[[1]]
-    rbind(matrix(as.numeric(pieces), ncol = 3),
-          c(0, 0, 1))
+    trans <- lapply(transforms, parseTrans)
+    Reduce("%*%", trans) 
 }
 
 .grImport2Env <- new.env()
