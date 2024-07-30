@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="288px" height="576px" viewBox="0 0 288 576" version="1.1">
+  <g transform="translate(0, 576) scale(1, -1)">
+    <g id="gridSVG" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="none" stroke-width="0.75" font-size="12" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" opacity="1" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-opacity="1" fill-opacity="0" font-weight="normal" font-style="normal">
+      <g id="GRID.rect.193.1">
+        <rect id="GRID.rect.193.1.1" x="0" y="0" width="288" height="576" transform="" stroke="none" fill="rgb(190,190,190)" stroke-opacity="0" fill-opacity="1"/>
+      </g>
+      <g id="picture.shape.1">
+        <defs>
+          <clipPath id="picture.shape::picture.scale.1.clipPath">
+            <rect x="0" y="0" width="288" height="576" fill="none" stroke="none"/>
+          </clipPath>
+        </defs>
+        <g id="picture.shape::picture.scale.1" clip-path="url(#picture.shape::picture.scale.1.clipPath)" stroke="none" fill="rgb(0,0,0)" stroke-opacity="0" fill-opacity="1">
+          <g id="import.13.GRID.gTree.208.1">
+            <g id="GRID.picRect.194.1">
+              <rect id="GRID.picRect.194.1.1" x="-28.8" y="-57.6" width="345.6" height="691.2" transform="" fill="rgb(255,255,255)" fill-opacity="1"/>
+            </g>
+            <g id="GRID.picRect.195.1">
+              <rect id="GRID.picRect.195.1.1" x="-28.8" y="-57.6" width="345.6" height="691.2" transform="" fill="rgb(255,255,255)" fill-opacity="1"/>
+            </g>
+            <g id="GRID.picComplexPath.196.1" fill="rgb(255,255,255)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" stroke-miterlimit="10" stroke-opacity="1" fill-opacity="0">
+              <g id="GRID.picPath.197.1">
+                <path id="GRID.picPath.197.1.1" d="M 0 0 L 288 0 L 288 576 L 0 576 Z" fill-rule="nonzero" stroke="rgb(255,255,255)" stroke-opacity="0"/>
+              </g>
+              <g id="GRID.picPolyline.198.1">
+                <polyline id="GRID.picPolyline.198.1.1" points="0,0 288,0 288,576 0,576 0,0" fill="none" fill-opacity="0"/>
+              </g>
+            </g>
+            <g id="GRID.picComplexPath.199.1" fill="rgb(255,255,255)" stroke-width="60" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" stroke-miterlimit="10" stroke-opacity="1" fill-opacity="0">
+              <g id="GRID.picPath.200.1">
+                <path id="GRID.picPath.200.1.1" d="M 0 0 L 288 576 Z" fill-rule="nonzero" stroke="rgb(255,255,255)" stroke-opacity="0"/>
+              </g>
+              <g id="GRID.picPolyline.201.1">
+                <polyline id="GRID.picPolyline.201.1.1" points="0,0 288,576" fill="none" fill-opacity="0"/>
+              </g>
+            </g>
+            <g id="GRID.picComplexPath.202.1" fill="rgb(255,255,255)" stroke-width="60" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(223,83,107)" stroke-miterlimit="10" stroke-opacity="1" fill-opacity="0">
+              <g id="GRID.picPath.203.1">
+                <path id="GRID.picPath.203.1.1" d="M 0 576 L 288 0 Z" fill-rule="nonzero" stroke="rgb(255,255,255)" stroke-opacity="0"/>
+              </g>
+              <g id="GRID.picPolyline.204.1">
+                <polyline id="GRID.picPolyline.204.1.1" points="0,576 288,0" fill="none" fill-opacity="0"/>
+              </g>
+            </g>
+            <g id="GRID.picComplexPath.205.1" fill="rgb(255,255,255)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" stroke-miterlimit="10" stroke-opacity="1" fill-opacity="0">
+              <g id="GRID.picPath.206.1">
+                <path id="GRID.picPath.206.1.1" d="M 0 0 L 288 0 L 288 576 L 0 576 Z" fill-rule="nonzero" stroke="rgb(255,255,255)" stroke-opacity="0"/>
+              </g>
+              <g id="GRID.picPolyline.207.1">
+                <polyline id="GRID.picPolyline.207.1.1" points="0,0 288,0 288,576 0,576 0,0" fill="none" fill-opacity="0"/>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="288px" height="288px" viewBox="0 0 288 288" version="1.1">
+  <g transform="translate(0, 288) scale(1, -1)">
+    <g id="gridSVG" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="none" stroke-width="0.75" font-size="12" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" opacity="1" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-opacity="1" fill-opacity="0" font-weight="normal" font-style="normal">
+      <g id="GRID.rect.129.1">
+        <rect id="GRID.rect.129.1.1" x="0" y="0" width="288" height="288" transform="" stroke="none" fill="rgb(190,190,190)" stroke-opacity="0" fill-opacity="1"/>
+      </g>
+      <g id="picture.shape.1">
+        <defs>
+          <clipPath id="picture.shape::picture.scale.1.clipPath">
+            <rect x="72" y="72" width="144" height="144" fill="none" stroke="none"/>
+          </clipPath>
+        </defs>
+        <g id="picture.shape::picture.scale.1" clip-path="url(#picture.shape::picture.scale.1.clipPath)" stroke="none" fill="rgb(0,0,0)" stroke-opacity="0" fill-opacity="1">
+          <g id="import.9.GRID.gTree.144.1">
+            <g id="GRID.picRect.130.1">
+              <rect id="GRID.picRect.130.1.1" x="57.6" y="57.6" width="172.8" height="172.8" transform="" fill="rgb(255,255,255)" fill-opacity="1"/>
+            </g>
+            <g id="GRID.picRect.131.1">
+              <rect id="GRID.picRect.131.1.1" x="57.6" y="57.6" width="172.8" height="172.8" transform="" fill="rgb(255,255,255)" fill-opacity="1"/>
+            </g>
+            <g id="GRID.picComplexPath.132.1" fill="rgb(255,255,255)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" stroke-miterlimit="10" stroke-opacity="1" fill-opacity="0">
+              <g id="GRID.picPath.133.1">
+                <path id="GRID.picPath.133.1.1" d="M 72 72 L 216 72 L 216 216 L 72 216 Z" fill-rule="nonzero" stroke="rgb(255,255,255)" stroke-opacity="0"/>
+              </g>
+              <g id="GRID.picPolyline.134.1">
+                <polyline id="GRID.picPolyline.134.1.1" points="72,72 216,72 216,216 72,216 72,72" fill="none" fill-opacity="0"/>
+              </g>
+            </g>
+            <g id="GRID.picComplexPath.135.1" fill="rgb(255,255,255)" stroke-width="30" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" stroke-miterlimit="10" stroke-opacity="1" fill-opacity="0">
+              <g id="GRID.picPath.136.1">
+                <path id="GRID.picPath.136.1.1" d="M 72 72 L 216 216 Z" fill-rule="nonzero" stroke="rgb(255,255,255)" stroke-opacity="0"/>
+              </g>
+              <g id="GRID.picPolyline.137.1">
+                <polyline id="GRID.picPolyline.137.1.1" points="72,72 216,216" fill="none" fill-opacity="0"/>
+              </g>
+            </g>
+            <g id="GRID.picComplexPath.138.1" fill="rgb(255,255,255)" stroke-width="30" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(223,83,107)" stroke-miterlimit="10" stroke-opacity="1" fill-opacity="0">
+              <g id="GRID.picPath.139.1">
+                <path id="GRID.picPath.139.1.1" d="M 72 216 L 216 72 Z" fill-rule="nonzero" stroke="rgb(255,255,255)" stroke-opacity="0"/>
+              </g>
+              <g id="GRID.picPolyline.140.1">
+                <polyline id="GRID.picPolyline.140.1.1" points="72,216 216,72" fill="none" fill-opacity="0"/>
+              </g>
+            </g>
+            <g id="GRID.picComplexPath.141.1" fill="rgb(255,255,255)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" stroke-miterlimit="10" stroke-opacity="1" fill-opacity="0">
+              <g id="GRID.picPath.142.1">
+                <path id="GRID.picPath.142.1.1" d="M 72 72 L 216 72 L 216 216 L 72 216 Z" fill-rule="nonzero" stroke="rgb(255,255,255)" stroke-opacity="0"/>
+              </g>
+              <g id="GRID.picPolyline.143.1">
+                <polyline id="GRID.picPolyline.143.1.1" points="72,72 216,72 216,216 72,216 72,72" fill="none" fill-opacity="0"/>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

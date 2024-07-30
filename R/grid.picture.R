@@ -1,6 +1,6 @@
 pictureGrob <- function(picture, 
                         x = unit(0.5, "npc"), y = unit(0.5, "npc"),
-                        width = unit(1, "npc"), height = unit(1, "npc"),
+                        width = NULL, height = NULL,
                         just = "centre", hjust = NULL, vjust = NULL,
                         default.units = "npc",
                         expansion = 0.05, xscale = NULL, yscale = NULL,
@@ -9,17 +9,18 @@ pictureGrob <- function(picture,
                         ext = c("none", "clipbbox", "gridSVG"),
                         delayContent = match.arg(ext) == "gridSVG",
                         name = NULL, prefix = NULL, clip = "on") {
+    if (!is.unit(x))
+        x <- unit(x, default.units)
+    if (!is.unit(y))
+        y <- unit(y, default.units)
+    if (!is.null(width) && !is.unit(width))
+        width <- unit(width, default.units)
+    if (!is.null(height) && !is.unit(height))
+        height <- unit(height, default.units)
     if (delayContent) {
-        if (!is.unit(x))
-            x <- unit(x, default.units)
-        if (!is.unit(y))
-            y <- unit(y, default.units)
-        if (!is.unit(width))
-            width <- unit(width, default.units)
-        if (!is.unit(height))
-            height <- unit(height, default.units)
         gTree(picture=picture, 
-              x = x, y = y, width = width, height = height, just = just,
+              x = x, y = y, width = width, height = height,
+              just = just, hjust = hjust, vjust = vjust,
               expansion = expansion, xscale = xscale, yscale = yscale,
               distort = distort, gpFUN = gpFUN, ext = match.arg(ext),
               clip = clip, prefix = prefix,
@@ -32,7 +33,8 @@ pictureGrob <- function(picture,
         grobify(picture, 
                 x = x, y = y,
                 width = width, height = height,
-                default.units = default.units, just = just,
+                default.units = default.units,
+                just = just, hjust = hjust, vjust = vjust,
                 expansion = expansion,
                 xscale = xscale, yscale = yscale,
                 distort = distort, gpFUN = gpFUN, ext = match.arg(ext),
@@ -49,7 +51,8 @@ makeContent.PictureGrob <- function(x, ...) {
     picGrob <- do.call(grobify,
                        c(list(x$picture, 
                               x = x$x, y = x$y,
-                              width = x$width, height = x$height, just = x$just,
+                              width = x$width, height = x$height,
+                              just = x$just, hjust = x$hjust, vjust = x$vjust,
                               expansion = x$expansion,
                               xscale = x$xscale, yscale = x$yscale,
                               distort = x$distort, gpFUN = x$gpFUN, ext = x$ext,

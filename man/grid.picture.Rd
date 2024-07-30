@@ -11,7 +11,7 @@
 \usage{
 pictureGrob(picture,
             x = unit(0.5, "npc"), y = unit(0.5, "npc"),
-            width = unit(1, "npc"), height = unit(1, "npc"),
+            width = NULL, height = NULL,
             just = "centre", hjust = NULL, vjust = NULL,
             default.units = "npc", expansion = 0.05,
             xscale = NULL, yscale = NULL, distort = FALSE,
@@ -33,9 +33,11 @@ grid.picture(...)
   }
   \item{width}{
     A single numeric value or unit object specifying a width.
+    May also be \code{NULL} (see Details).
   }
   \item{height}{
     A single numeric value or unit object specifying a height.
+    May also be \code{NULL} (see Details).
   }
   \item{just}{
     The justification of the picture relative to its (x, y) location.
@@ -120,6 +122,14 @@ grid.picture(...)
     Clipping setting passed to the viewport that is set up for drawing
     the imported image.  
   }
+}
+\details{
+  If \code{width} or \code{height} is \code{NULL}, and
+  \code{distort=FALSE},
+  the aspect ratio of the image will be respected.
+  By default, the image will match the width/height of the current viewport,
+  (if \code{distort=FALSE}, as much as the aspect ratio allows),
+  less any \code{expansion}.
 }
 \value{
   A grid gTree.

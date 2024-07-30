@@ -128,8 +128,65 @@ gridSVGAddFeatures <- function(grob, gp,
     grob
 }
 
+resolvePictureSize <- function(width, height, xscale, yscale, distort) {
+    if (is.null(width)) {
+        if (is.null(height)) {
+            if (distort) {
+                width <- unit(1, "npc")
+                height <- unit(1, "npc")
+            } else {
+                pictureRatio <- abs(diff(yscale))/
+                    abs(diff(xscale))
+                vpWidth <- convertWidth(unit(1, "npc"), "inches",
+                                        valueOnly=TRUE)
+                vpHeight <- convertHeight(unit(1, "npc"), "inches",
+                                          valueOnly=TRUE)
+                vpRatio <- vpHeight/vpWidth
+                if (pictureRatio > vpRatio) {
+                    height <- unit(vpHeight, "inches")
+                    width <- unit(vpHeight*
+                                  abs(diff(xscale))/
+                                  abs(diff(yscale)),
+                                  "inches")
+                } else {
+                    width <- unit(vpWidth, "inches")
+                    height <- unit(vpWidth*
+                                   abs(diff(yscale))/
+                                   abs(diff(xscale)),
+                                   "inches")
+                }
+            }
+        } else {
+            if (distort) {
+                width <- unit(1, "npc")
+            } else {
+                h <- convertHeight(height, "inches", valueOnly=TRUE)
+                width <- unit(h*
+                              abs(diff(xscale))/
+                              abs(diff(yscale)),
+                              "inches")
+            }
+        }
+    } else {
+        if (is.null(height)) {
+            if (distort) {
+                height <- unit(1, "npc")
+            } else {
+                w <- convertWidth(width, "inches", valueOnly=TRUE)
+                height <- unit(w*
+                               abs(diff(yscale))/
+                               abs(diff(xscale)),
+                               "inches")
+            }
+        }
+    }
+    list(width=width, height=height)
+}
+
 # Viewport from picture
 pictureVP <- function(picture, expansion = 0.05,
+                      x, y, width, height,
+                      just, hjust, vjust,
                       xscale = NULL, yscale = NULL,
                       distort = FALSE, clip = "on", ...) {
     if (is.null(xscale) || is.null(yscale)) {
@@ -139,6 +196,8 @@ pictureVP <- function(picture, expansion = 0.05,
     xscale <- xscale + expansion * c(-1, 1) * diff(xscale)
     yscale <- yscale + expansion * c(-1, 1) * diff(yscale)
 
+    wh <- resolvePictureSize(width, height, xscale, yscale, distort)
+
     # If distort=TRUE, having the two layers of viewports is
     # massively redundant, BUT I'm keeping it so that either
     # way there is the same viewport structure, which I think
@@ -146,10 +205,13 @@ pictureVP <- function(picture, expansion = 0.05,
     # these viewports (otherwise they would need to figure
     # out whether a picture grob has one or two viewports).
     vpStack(viewport(name = "picture.shape", ...,
+                     x = x, y = y, width = wh$width, height = wh$height,
+                     just = c(resolveHJust(just, hjust),
+                              resolveVJust(just, vjust)),
                      layout = grid.layout(1, 1,
-                       widths = abs(diff(xscale)),
-                       heights = abs(diff(yscale)),
-                       respect = ! distort)),
+                                          widths = abs(diff(xscale)),
+                                          heights = abs(diff(yscale)),
+                                          respect = ! distort)),
             viewport(name = "picture.scale",
                      layout.pos.col = 1,
                      xscale = xscale,

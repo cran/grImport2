@@ -2,6 +2,20 @@
 \title{NEWS file for the grImport2 package}
 \encoding{UTF-8}
 
+\section{Changes in version 0.3-3}{
+  \itemize{
+    \item Respond to \code{hjust} and \code{vjust} (previously ignored).
+
+    \item Allow \code{width} and \code{height} to be \code{NULL}
+    (in fact those are now the defaults)
+    and fill them in based on image aspect ratio.
+  }
+}
+\section{Changes in version 0.3-2}{
+  \itemize{
+    \item Bug fix for SVG with decimal place in \code{width} or \code{height}.
+  }
+}
 \section{Changes in version 0.3-1}{
   \itemize{
     \item Additional support for parsing newer Cairo SVG output:
